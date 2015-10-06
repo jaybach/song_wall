@@ -1,0 +1,22 @@
+<h2><a href="/songs/new">Add a song!</a></h2> <h4>Log in to add and vote for songs. <em>(You may only vote for each song once!)</em></h4>
+
+<h5><a href="/users/register">Register for an account</a> or <a href="/users/login">log in</h5>
+<hr>
+
+<!-- lists all songs, the artist, the song poster, total votes for each song, vote button (if applicable), and link to youtube video for each song: -->
+<% @songs.each do |song| %>
+  <div class="song">
+    <h3><a href="/songs/<%= song.id %>"><%= song.song_title %> <small>(by: <%= song.author %>)</small></a></h3>
+    <h6>posted by: <%= User.find(song.user_id).name %></h6>
+    <h5>
+    <!-- shows vote button if user is logged in and has not yet voted for the song in question: -->
+    <% if session[:user_id] && !Vote.find_by(user_id: current_user.id, song_id: song.id).present? %> 
+      <form method="post" action="/songs/votes/<%= song.id %>"><input type="hidden" name="song_id" value="<%= song.id %>"><input type="submit" value="Vote"></form>
+    <% end %>  
+    total votes: <%= song.votes.count %>
+    </h5>
+    <p><a href="<%= song.url %>" target="_blank"><%= song.url %></p>
+  </div>
+  <hr>
+<% end %>
+

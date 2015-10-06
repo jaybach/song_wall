@@ -1,0 +1,13 @@
+<!-- shows name of song, artist, link to youtube video, when song was added, and when song was last updated -->
+
+<h2><%= @song.song_title %></h2>
+
+<h3>Artist: <%= @song.author %></h3>
+
+<h4><a href="<%= @song.url %>" target="_blank"><%= @song.url %></h4>
+
+<p>song added at: <%= @song.created_at %></p>
+<p>song last updated at: <%= @song.updated_at %></p>
+
+<hr/>
+<a href="/songs">Return to song list</a>
